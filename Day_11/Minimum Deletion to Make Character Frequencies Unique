@@ -1,0 +1,23 @@
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var minDeletions = function(s) {
+    var countDict = {};
+    for(var ele of s){
+        countDict[ele] = (countDict[ele] || 0)+1;
+    }
+    var usedFreq = new Set();
+    var deletion = 0;
+    for(var ele of Object.entries(countDict)){
+        let currFreq = ele[1];
+        while(currFreq>0 &&usedFreq.has(currFreq)){
+            deletion++;
+            currFreq--;
+        }
+        if(currFreq>0)
+            usedFreq.add(currFreq);
+    }
+    return deletion;
+
+};
