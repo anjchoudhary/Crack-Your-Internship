@@ -1,0 +1,27 @@
+// Function to perform depth-first search traversal of a graph
+
+void dfs_utils(struct graph *g, int u, int visit[]) {
+    visit[u] = 1;  // mark the current node as visited
+    
+    printf("%d ", u);  // print the current node
+    struct ListNode *ptr = g->head[u];  // get the head of the adjacency list for the current node
+
+    // iterate over the adjacency list of the current node
+    for (; ptr != NULL; ptr = ptr->next) {
+        if (visit[ptr->data] == 0) {  // if the adjacent node is not visited yet
+            dfs_utils(g, ptr->data, visit);  // recursively call the dfs_utils function for the adjacent node
+        }
+    }
+}
+
+void dfs(struct graph *g, int n, int m) {
+    int visit[n];
+    memset(visit, 0, sizeof(visit));  // initialize the visit array with zeroes
+
+    // iterate over all nodes of the graph
+    for (int i = 0; i < n; i++) {
+        if (visit[i] == 0) {  // if the current node is not visited yet
+            dfs_utils(g, i, visit);  // call the dfs_utils function for the current node
+        }
+    }
+}
