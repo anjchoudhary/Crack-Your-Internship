@@ -1,0 +1,65 @@
+class GFG
+{
+     public static boolean search(Node root, int val) {
+        if (root == null) {
+            return false;
+        }
+
+        if (root.data == val) {
+            return true;
+        }
+
+        if (root.data > val) {
+            return search(root.left, val);
+        }
+
+        else {
+            return search(root.right, val);
+        }
+    }
+
+     public static boolean isDeadEnd(Node root){
+        if (root == null) {
+            return false;
+        }
+
+        Queue<Node> q = new LinkedList<Node>();
+        q.add(root);
+
+        while (!q.isEmpty()) {
+
+            Node curr = q.poll();
+
+            // If the current node is a leaf node.
+            if (curr.left == null && curr.right == null) {
+
+                // If curr.data = 1 and a node with data 2 is already present in the BST, then
+                // it's a dead end.
+                if (curr.data == 1) {
+                    if (search(root, 2) == true) {
+                        return true;
+                    }
+                } else {
+
+                    // If both the nodes having value curr.data+1 and curr.data-1 are already
+                    // present in the BST, then it's a dead end.
+                    if ((search(root, curr.data + 1) == true) && (search(root, curr.data - 1) == true)) {
+                        return true;
+                    }
+                }
+            }
+
+            // If the current node is not a leaf node, then push its children to the queue.
+            else {
+                if (curr.left != null) {
+                    q.add(curr.left);
+                }
+                if (curr.right != null) {
+                    q.add(curr.right);
+                }
+            }
+        }
+
+        return false;
+    }
+}
